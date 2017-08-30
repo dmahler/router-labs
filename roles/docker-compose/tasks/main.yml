@@ -1,0 +1,4 @@
+---
+- name: "Building Docker Compose file"
+  template: src=compose.j2 dest=/vagrant/docker-compose.yml
+  delegate_to: localhost

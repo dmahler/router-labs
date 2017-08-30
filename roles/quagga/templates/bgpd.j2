@@ -1,0 +1,12 @@
+!
+log syslog
+!
+!
+router bgp {{ bgp.local_as }}
+ {% for neighbor in bgp.neighbors -%}
+ neighbor {{ neighbor.ip }} remote-as {{ neighbor.remote_as }}
+ {% endfor -%}
+!
+!
+line vty
+!

@@ -1,0 +1,23 @@
+version: '3'
+services:
+{% for host in groups['all'] %}
+  {{ host }}:
+   image: quagga
+   privileged: true
+   tty: true
+   volumes:
+   - "/vagrant/configs/{{ inventory_hostname}}:/etc/quagga"
+   networks:
+{% for interface in hostvars[host]['interfaces'] %}
+     {{ interface.network }}:
+       ipv4_address: {{ interface.ipv4 | ipaddr('address') }}
+{% endfor %}
+
+{% endfor %}
+{% for network in networks %}
+networks:
+  {{ network.name }}:
+    ipam:
+      config:
+      - subnet: {{ network.subnet }}
+{% endfor %}

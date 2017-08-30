@@ -1,0 +1,17 @@
+!
+log syslog
+!
+!
+{% for interface in interfaces -%}
+interface {{ interface.name }}
+ ip address {{ interface.ipv4 }}
+{% endfor -%}
+!
+interface lo
+!
+!
+no ipv6 forwarding
+!
+!
+line vty
+!

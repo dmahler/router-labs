@@ -1,0 +1,10 @@
+interfaces:
+- name: eth0
+  ipv4: 10.10.10.20/24
+  network: transit10
+
+bgp:
+  local_as: 100
+  neighbors:
+  - ip: "10.10.10.10"
+    remote_as: 100

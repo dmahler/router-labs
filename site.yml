@@ -1,0 +1,8 @@
+---
+- name: Generate Quagga router configs
+  hosts: all
+  gather_facts: no
+  connection: local
+  roles:
+  - role: docker-compose
+  - role: quagga

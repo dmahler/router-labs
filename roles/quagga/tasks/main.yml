@@ -1,0 +1,31 @@
+---
+- name: "Clear out previous configs"
+  file:
+    path: configs/{{ inventory_hostname }}
+    state: absent
+
+- name: "Ensure conf directories exist"
+  file:
+    path: configs/{{ inventory_hostname }}
+    state: directory
+
+- name: "Place vtysh.conf file"
+  file:
+    path: configs/{{ inventory_hostname }}/vtysh.conf
+    state: touch
+
+- name: "Building Daemons config"
+  template: src=daemons.j2 dest=configs/{{ inventory_hostname }}/daemons
+  delegate_to: localhost
+
+- name: "Building Zebra Config"
+  template: src=zebra.j2 dest=configs/{{ inventory_hostname }}/zebra.conf
+  delegate_to: localhost
+
+- name: "Building Debian Config"
+  template: src=debian.j2 dest=configs/{{ inventory_hostname }}/debian.conf
+  delegate_to: localhost
+
+- name: "Building BGP Config"
+  template: src=bgpd.j2 dest=configs/{{ inventory_hostname }}/bgpd.conf
+  delegate_to: localhost
