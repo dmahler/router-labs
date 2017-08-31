@@ -6,7 +6,7 @@ services:
    privileged: true
    tty: true
    volumes:
-   - "/vagrant/configs/{{ inventory_hostname}}:/etc/quagga"
+   - "/vagrant/configs/{{ host }}:/etc/quagga"
    networks:
 {% for interface in hostvars[host]['interfaces'] %}
      {{ interface.network }}:

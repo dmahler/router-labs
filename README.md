@@ -17,6 +17,8 @@ CMD chown quagga.quaggavty ./*.conf
 CMD chmod 640 ./*.conf
 CMD /etc/init.d/quagga restart
 
+#reset lab
+docker-compose down --remove-orphans ; docker-compose up -d ; docker exec -it vagrant_r1.ebgp_1 /bin/sh
 
 #cleanup remove all containers
 docker rm $(docker ps -a -f status=exited -q)

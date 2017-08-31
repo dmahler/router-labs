@@ -1,7 +1,7 @@
 version: '3'
 services:
   r1.ebgp:
-   image: ewindisch/quagga
+   image: quagga
    privileged: true
    tty: true
    volumes:
@@ -11,11 +11,11 @@ services:
        ipv4_address: 10.10.10.10
 
   r2.ebgp:
-   image: ewindisch/quagga
+   image: quagga
    privileged: true
    tty: true
    volumes:
-   - "/vagrant/configs/r1.ebgp:/etc/quagga"
+   - "/vagrant/configs/r2.ebgp:/etc/quagga"
    networks:
      transit10:
        ipv4_address: 10.10.10.20
