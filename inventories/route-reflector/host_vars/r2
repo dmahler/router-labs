@@ -1,0 +1,43 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 22.0.0.2/8
+    secondaries:
+    - 20.0.0.2/8
+
+- name: eth0
+  ipv4:
+    primary: 26.0.0.20/24
+  network: external_R2_R6
+
+- name: eth1
+  ipv4:
+    primary: 10.0.0.20/24
+  network: internal
+
+ospf:
+  networks:
+  - prefix: 0.0.0.0/0
+    area: 0
+
+bgp:
+  local_as: 100
+  neighbors:
+  - ip: "10.0.0.10"
+    remote_as: 100
+    route_reflector_client: True
+  - ip: "10.0.0.30"
+    remote_as: 100
+    route_reflector_client: True
+  - ip: "10.0.0.40"
+    remote_as: 100
+    route_reflector_client: True
+  - ip: "26.0.0.60"
+    remote_as: 666
+  networks:
+  - network: 22.0.0.0
+    mask: 255.0.0.0
+  - network: 20.0.0.0
+    mask: 255.0.0.0
+  - network: 10.0.0.0
+    mask: 255.255.255.0

@@ -1,0 +1,11 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 22.0.0.2/8
+    secondaries:
+    - 20.0.0.2/8
+
+- name: eth0
+  ipv4:
+    primary: 10.0.0.20/24
+  network: internal

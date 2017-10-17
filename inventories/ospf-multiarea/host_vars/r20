@@ -1,0 +1,23 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 20.20.20.20/24
+
+- name: eth0
+  ipv4:
+    primary: 20.0.0.20/16
+  network: area20
+
+- name: eth1
+  ipv4:
+    primary: 192.168.0.20/16
+  network: backbone
+
+ospf:
+  networks:
+  - prefix: 192.168.0.0/16
+    area: 0
+  - prefix: 20.0.0.0/16
+    area: 20
+  - prefix: 20.20.20.0/24
+    area: 0

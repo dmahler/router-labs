@@ -1,0 +1,28 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 20.0.0.20/8
+
+- name: eth0
+  ipv4:
+    primary: 200.0.0.20/24
+  network: isp2
+
+- name: eth1
+  ipv4:
+    primary: 50.0.0.20/24
+  network: peering
+
+bgp:
+  local_as: 20
+  neighbors:
+  - ip: "200.0.0.3"
+    remote_as: 100
+  - ip: "50.0.0.10"
+    remote_as: 10
+  - ip: "50.0.0.11"
+    remote_as: 10
+  - ip: "50.0.0.5"
+    remote_as: 55
+  - ip: "50.0.0.6"
+    remote_as: 66

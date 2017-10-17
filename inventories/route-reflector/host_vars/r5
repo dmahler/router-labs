@@ -1,0 +1,22 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 55.0.0.5/8
+    secondaries:
+    - 50.0.0.5/8
+
+- name: eth0
+  ipv4:
+    primary: 15.0.0.50/24
+  network: external_R1_R5
+
+bgp:
+  local_as: 555
+  neighbors:
+  - ip: "15.0.0.10"
+    remote_as: 100
+  networks:
+  - network: 50.0.0.0
+    mask: 255.0.0.0
+  - network: 55.0.0.0
+    mask: 255.0.0.0

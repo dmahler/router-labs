@@ -1,0 +1,16 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 12.12.12.12/32
+
+- name: eth0
+  ipv4:
+    primary: 10.0.0.12/16
+  network: area10
+
+ospf:
+  networks:
+  - prefix: 12.12.12.12/32
+    area: 10
+  - prefix: 10.0.0.0/16
+    area: 10

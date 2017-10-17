@@ -1,0 +1,72 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 2.0.0.2/8
+    secondaries:
+    - 22.0.0.2/8
+  ospf_network_type: "non-broadcast"
+
+- name: eth0
+  ipv4:
+    primary: 10.10.10.20/24
+  network: internal
+
+- name: eth1
+  ipv4:
+    primary: 100.0.0.2/24
+  network: isp1
+
+static_routes:
+- destination: 0.0.0.0/0
+  gateway: null0
+
+ospf:
+  default_information_originate: True
+  networks:
+  - prefix: 0.0.0.0/0
+    area: 0
+
+bgp:
+  local_as: 100
+  neighbors:
+  - ip: "100.0.0.10"
+    remote_as: 10
+    soft_reconfiguration: True
+    route_map_out: outbound
+    route_map_in: inbound
+  - ip: "100.0.0.3"
+    remote_as: 100
+  networks:
+  - network: 1.0.0.0
+    mask: 255.0.0.0
+  - network: 11.0.0.0
+    mask: 255.0.0.0
+  - network: 10.10.10.0
+    mask: 255.255.255.0
+
+prefix_lists:
+- name: lan
+  seqs:
+  - number: 100
+    action: "permit"
+    perfix: "1.0.0.0/8"
+  - number: 200
+    action: "permit"
+    prefix: "10.10.10.0/24"
+  - number: 300
+    action: "permit"
+    perfix: "11.0.0.0/8"
+
+route_maps:
+- name: outbound
+  seqs:
+  - number: 100
+    action: "permit"
+    match: "ip address prefix-list lan"
+- name: inbound
+  seqs:
+  - number: 100
+    action: "deny"
+    match: "ip address prefix-list lan"
+  - number: 200
+    action: "permit"

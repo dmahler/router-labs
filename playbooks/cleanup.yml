@@ -1,0 +1,31 @@
+---
+# stop and remove all containers, remove all networks, remove all images
+- name: Cleanup
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  tasks:
+
+  - name: "Stop all containers"
+    shell: docker stop $(docker ps -aq)
+    ignore_errors: true
+    run_once: true
+    failed_when: false
+
+  - name: "Remove all containers"
+    shell: docker rm $(docker ps -aq)
+    ignore_errors: true
+    run_once: true
+    failed_when: false
+
+  - name: "Remove all networks"
+    shell: docker network rm $(docker network ls | grep vagrant | awk '/ / { print $1 }')
+    ignore_errors: true
+    run_once: true
+    failed_when: false
+
+  - name: "Remove all images"
+    shell: docker rmi $(docker images -a -q)
+    ignore_errors: true
+    run_once: true
+    failed_when: false

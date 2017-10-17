@@ -1,0 +1,22 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 66.0.0.6/8
+    secondaries:
+    - 60.0.0.6/8
+
+- name: eth0
+  ipv4:
+    primary: 26.0.0.60/24
+  network: external_R2_R6
+
+bgp:
+  local_as: 666
+  neighbors:
+  - ip: "26.0.0.20"
+    remote_as: 100
+  networks:
+  - network: 60.0.0.0
+    mask: 255.0.0.0
+  - network: 66.0.0.0
+    mask: 255.0.0.0

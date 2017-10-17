@@ -1,0 +1,37 @@
+---
+- name: "Clear out previous configs"
+  file:
+    path: configs/
+    state: absent
+  run_once: true
+
+- name: "Ensure conf directories exist"
+  file:
+    path: configs/{{ inventory_hostname }}
+    state: directory
+
+- name: "Place vtysh.conf file"
+  file:
+    path: configs/{{ inventory_hostname }}/vtysh.conf
+    state: touch
+
+- name: "Building Daemons config"
+  template: src=daemons.j2 dest=configs/{{ inventory_hostname }}/daemons
+
+- name: "Building Zebra Config"
+  template: src=zebra.j2 dest=configs/{{ inventory_hostname }}/zebra.conf
+
+- name: "Building Debian Config"
+  template: src=debian.j2 dest=configs/{{ inventory_hostname }}/debian.conf
+
+- name: "Building OSPFv2 Config"
+  template: src=ospfd.j2 dest=configs/{{ inventory_hostname }}/ospfd.conf
+  when: ospf is defined
+
+- name: "Building IS-IS Config"
+  template: src=isisd.j2 dest=configs/{{ inventory_hostname }}/isisd.conf
+  when: isis is defined
+
+- name: "Building BGP Config"
+  template: src=bgpd.j2 dest=configs/{{ inventory_hostname }}/bgpd.conf
+  when: bgp is defined

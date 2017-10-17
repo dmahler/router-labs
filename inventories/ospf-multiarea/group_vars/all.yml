@@ -1,0 +1,13 @@
+networks:
+- name: backbone
+  subnet: 192.168.0.0/16
+- name: area10
+  subnet: 10.0.0.0/16
+- name: area20
+  subnet: 20.0.0.0/16
+- name: ext200
+  subnet: 200.0.0.0/16
+- name: area30
+  subnet: 30.0.0.0/16
+- name: virtual-link
+  subnet: 40.0.0.0/16

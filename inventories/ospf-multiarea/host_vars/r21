@@ -1,0 +1,27 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 21.21.21.21/32
+
+- name: eth0
+  ipv4:
+    primary: 20.0.0.21/16
+  network: area20
+
+- name: eth1
+  ipv4:
+    primary: 200.0.0.21/16
+  network: ext200
+
+ospf:
+  networks:
+  - prefix: 20.0.0.0/16
+    area: 20
+  - prefix: 21.21.21.21/32
+    area: 20
+  redistribute:
+  - protocol: static
+
+static_routes:
+  - destination: 201.201.201.201/32
+    gateway: 200.0.0.200

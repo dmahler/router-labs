@@ -1,0 +1,31 @@
+---
+- name: "Building Docker Compose file"
+  template: src=compose.j2 dest=/vagrant/docker-compose.yml
+  delegate_to: localhost
+  run_once: true
+
+- name: "Build docker image"
+  shell: docker build -t quagga:latest .
+  run_once: true
+
+- name: "Stop all containers - hang tight this takes a moment"
+  shell: docker stop $(docker ps -aq)
+  ignore_errors: true
+  run_once: true
+  failed_when: false
+
+- name: "Remove all containers"
+  shell: docker rm $(docker ps -aq)
+  ignore_errors: true
+  run_once: true
+  failed_when: false
+
+- name: "Remove all networks"
+  shell: docker network rm $(docker network ls | grep vagrant | awk '/ / { print $1 }')
+  ignore_errors: true
+  run_once: true
+  failed_when: false
+
+- name: "Launch topology"
+  shell: docker-compose up -d
+  run_once: true

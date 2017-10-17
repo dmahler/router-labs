@@ -1,0 +1,9 @@
+networks:
+- name: internal
+  subnet: 10.10.10.0/24
+- name: isp1
+  subnet: 100.0.0.0/24
+- name: isp2
+  subnet: 200.0.0.0/24
+- name: peering
+  subnet: 50.0.0.0/24

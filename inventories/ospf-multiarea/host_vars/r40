@@ -1,0 +1,16 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 40.40.40.40/32
+
+- name: eth0
+  ipv4:
+    primary: 40.0.0.40/16
+  network: virtual-link
+
+ospf:
+  networks:
+  - prefix: 40.40.40.40/32
+    area: 0
+  - prefix: 40.0.0.0/16
+    area: 0

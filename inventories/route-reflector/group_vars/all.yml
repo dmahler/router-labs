@@ -1,0 +1,7 @@
+networks:
+- name: internal
+  subnet: 10.0.0.0/24
+- name: external_R1_R5
+  subnet: 15.0.0.0/24
+- name: external_R2_R6
+  subnet: 26.0.0.0/24

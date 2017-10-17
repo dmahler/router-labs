@@ -1,0 +1,29 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 11.0.0.1/8
+    secondaries:
+    - 111.0.0.1/8
+
+- name: eth0
+  ipv4:
+    primary: 10.10.10.10/24
+  network: transit10
+
+ospf:
+  networks:
+  - prefix: 0.0.0.0/0
+    area: 0
+
+bgp:
+  local_as: 100
+  neighbors:
+  - ip: "10.10.10.20"
+    remote_as: 100
+  - ip: "10.10.10.30"
+    remote_as: 100
+  networks:
+  - network: 11.0.0.0
+    mask: 255.0.0.0
+  - network: 111.0.0.0
+    mask: 255.0.0.0

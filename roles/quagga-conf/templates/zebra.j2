@@ -1,0 +1,46 @@
+!
+hostname {{ inventory_hostname }}
+password q
+!
+log syslog
+!
+{% for interface in interfaces %}
+interface {{ interface.name }}
+{% if interface.ipv4 is defined %}
+ ip address {{ interface.ipv4.primary }}
+{% if interface.ipv4.secondaries is defined %}
+{% for ip in interface.ipv4.secondaries %}
+ ip address {{ ip }}
+{% endfor %}
+{% endif %}
+{% endif %}
+!
+{% endfor %}
+!
+{% if static_routes is defined %}
+{% for route in static_routes %}
+ip route {{ route.destination }} {{ route.gateway }} {{ route.distance | default(1) }}
+{% endfor %}
+{% endif %}
+
+{% if prefix_lists is defined %}
+{% for prefix_list in prefix_lists %}
+{% for seq in prefix_list.seqs %}
+ip prefix-list {{ prefix_list.name }} seq {{ seq.number }} {{ seq.action }} {{ seq.prefix }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{% if route_maps is defined %}
+{% for route_map in route_maps %}
+{% for seq in route_map.seqs %}
+route-map {{ route_map.name }} {{ seq.action }} {{ seq.number }}
+{% if seq.match is defined %}
+  match {{ seq.match }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+line vty
+!

@@ -1,0 +1,17 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 1.0.0.1/8
+    secondaries:
+    - 11.0.0.1/8
+  ospf_network_type: "non-broadcast"
+
+- name: eth0
+  ipv4:
+    primary: 10.10.10.10/24
+  network: internal
+
+ospf:
+  networks:
+  - prefix: 0.0.0.0/0
+    area: 0

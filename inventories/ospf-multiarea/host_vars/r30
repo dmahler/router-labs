@@ -1,0 +1,28 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 30.30.30.30/24
+
+- name: eth0
+  ipv4:
+    primary: 30.0.0.30/16
+  network: area30
+
+- name: eth1
+  ipv4:
+    primary: 192.168.0.30/16
+  network: backbone
+
+
+
+ospf:
+  networks:
+  - prefix: 192.168.0.0/16
+    area: 0
+  - prefix: 30.0.0.0/16
+    area: 30
+  - prefix: 30.30.30.0/24
+    area: 0
+  virtual_link:
+    area: 30
+    remote_rid: 31.31.31.31

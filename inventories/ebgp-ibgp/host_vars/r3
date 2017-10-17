@@ -1,0 +1,81 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 3.0.0.3/8
+    secondaries:
+    - 33.0.0.3/8
+  ospf_network_type: "non-broadcast"
+
+- name: eth0
+  ipv4:
+    primary: 10.10.10.30/24
+  network: internal
+
+- name: eth1
+  ipv4:
+    primary: 100.0.0.3/24
+  network: isp1
+
+- name: eth2
+  ipv4:
+    primary: 200.0.0.3/24
+  network: isp2
+
+static_routes:
+- destination: 0.0.0.0/0
+  gateway: null0
+
+ospf:
+  default_information_originate: True
+  networks:
+  - prefix: 0.0.0.0/0
+    area: 0
+
+bgp:
+  local_as: 100
+  neighbors:
+  - ip: "100.0.0.10"
+    remote_as: 10
+    soft_reconfiguration: True
+    route_map_out: outbound
+    route_map_in: inbound
+  - ip: "100.0.0.11"
+    remote_as: 10
+    soft_reconfiguration: True
+    route_map_out: outbound
+    route_map_in: inbound
+  - ip: "200.0.0.20"
+    remote_as: 20
+    soft_reconfiguration: True
+    route_map_out: outbound
+    route_map_in: inbound
+  - ip: "100.0.0.2"
+    remote_as: 100
+  networks:
+  - network: 1.0.0.0
+    mask: 255.0.0.0
+  - network: 11.0.0.0
+    mask: 255.0.0.0
+  - network: 10.10.10.0
+    mask: 255.255.255.0
+
+prefix_lists:
+- name: lan
+  seqs:
+  - number: 100
+    action: "permit"
+    prefix: "10.10.10.0/24"
+
+route_maps:
+- name: outbound
+  seqs:
+  - number: 100
+    action: "permit"
+    match: "ip address prefix-list lan"
+- name: inbound
+  seqs:
+  - number: 100
+    action: "deny"
+    match: "ip address prefix-list lan"
+  - number: 200
+    action: "permit"

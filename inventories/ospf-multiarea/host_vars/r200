@@ -1,0 +1,9 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 201.201.201.201/32
+
+- name: eth0
+  ipv4:
+    primary: 200.0.0.200/16
+  network: ext200

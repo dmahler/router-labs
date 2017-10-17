@@ -1,0 +1,25 @@
+version: '3'
+services:
+{% for host in play_hosts %}
+  {{ host }}:
+   image: quagga
+   privileged: true
+   tty: true
+   volumes:
+   - "/vagrant/configs/{{ host }}:/etc/quagga-temp"
+   networks:
+{% for interface in hostvars[host]['interfaces'] %}
+{% if interface.network is defined %}
+     {{ interface.network }}:
+       ipv4_address: {{ interface.ipv4.primary | ipaddr('address') }}
+{% endif %}
+{% endfor %}
+
+{% endfor %}
+networks:
+{% for network in networks %}
+  {{ network.name }}:
+    ipam:
+      config:
+      - subnet: {{ network.subnet }}
+{% endfor %}

@@ -1,0 +1,35 @@
+{% for interface in interfaces %}
+interface {{ interface.name }}
+{% if interface.ospf_hello_interval is defined %}
+  ip ospf hello-interval {{ interface.ospf_hello_interval }}
+{% endif %}
+{% if interface.ospf_dead_interval is defined %}
+  ip ospf dead-interval {{ interface.ospf_dead_interval }}
+{% endif %}
+{% if interface.ospf_network_type is defined %}
+  ip ospf network {{ interface.ospf_network_type }}
+{% endif %}
+!
+{% endfor %}
+
+{% if ospf is defined %}
+router ospf
+{% for network in ospf.networks %}
+  network {{ network.prefix }} area {{ network.area }}
+{% endfor %}
+{% if ospf.redistribute is defined %}
+{% for protocol in ospf.redistribute %}
+{% if ospf.redistribute.metric is defined %}
+  redistribute {{ protocol.protocol }} metric {{ protocol.metric }}
+{% else %}
+  redistribute {{ protocol.protocol }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if ospf.virtual_link is defined %}
+  area {{ ospf.virtual_link.area }} virtual-link {{ ospf.virtual_link.remote_rid }}
+{% endif %}
+{% endif %}
+{% if ospf.default_information_originate is defined %}
+  default-information originate
+{% endif %}

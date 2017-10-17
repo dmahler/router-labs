@@ -1,0 +1,22 @@
+interfaces:
+- name: lo
+  ipv4:
+    primary: 1.1.0.0/16
+    secondaries:
+    - 1.2.0.0/16
+
+- name: eth0
+  ipv4:
+    primary: 10.10.10.10/24
+  network: transit10
+
+bgp:
+  local_as: 100
+  neighbors:
+  - ip: "10.10.10.20"
+    remote_as: 200
+  networks:
+  - network: "1.1.0.0"
+    mask: "255.255.0.0"
+  - network: "1.2.0.0"
+    mask: "255.255.0.0"
