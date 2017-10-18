@@ -1,6 +1,6 @@
 #!/bin/bash -er
 
-# This file / idea was mostley taken from https://github.com/ewindisch/docker-quagga/blob/master/quagga-init
+# This file / idea was mostly taken from https://github.com/ewindisch/docker-quagga/blob/master/quagga-init
 
 ip route del default
 
