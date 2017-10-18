@@ -49,13 +49,13 @@ prefix_lists:
   seqs:
   - number: 100
     action: "permit"
-    perfix: "1.0.0.0/8"
+    prefix: "1.0.0.0/8"
   - number: 200
     action: "permit"
     prefix: "10.10.10.0/24"
   - number: 300
     action: "permit"
-    perfix: "11.0.0.0/8"
+    prefix: "11.0.0.0/8"
 
 route_maps:
 - name: outbound
