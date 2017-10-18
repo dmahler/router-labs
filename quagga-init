@@ -1,4 +1,7 @@
 #!/bin/bash -er
+
+# This file / idea was mostley taken from https://github.com/ewindisch/docker-quagga/blob/master/quagga-init
+
 ip route del default
 
 cp /etc/quagga-temp/* /etc/quagga
