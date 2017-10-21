@@ -49,6 +49,16 @@ route-map {{ route_map.name }} {{ seq.action }} {{ seq.number }}
 {% if seq.match is defined %}
   match {{ seq.match }}
 {% endif %}
+{% if seq.local_pref is defined %}
+  set local-preference {{ seq.local_pref }}
+{% endif %}
+{% if seq.weight is defined %}
+  set weight {{ seq.weight }}
+{% endif %}
+{% if seq.as_prepend is defined %}
+  set as-path prepend {{ seq.as_prepend }}
+{% endif %}
 {% endfor %}
+!
 {% endfor %}
 {% endif %}

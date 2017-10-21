@@ -33,3 +33,23 @@ router ospf
 {% if ospf.default_information_originate is defined %}
   default-information originate
 {% endif %}
+
+{% if prefix_lists is defined %}
+{% for prefix_list in prefix_lists %}
+{% for seq in prefix_list.seqs %}
+ip prefix-list {{ prefix_list.name }} seq {{ seq.number }} {{ seq.action }} {{ seq.prefix }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{% if route_maps is defined %}
+{% for route_map in route_maps %}
+{% for seq in route_map.seqs %}
+route-map {{ route_map.name }} {{ seq.action }} {{ seq.number }}
+{% if seq.match is defined %}
+  match {{ seq.match }}
+{% endif %}
+{% endfor %}
+!
+{% endfor %}
+{% endif %}

@@ -38,7 +38,7 @@ bgp:
     remote_as: 10
     soft_reconfiguration: True
     route_map_out: outbound
-    route_map_in: inbound
+    route_map_in: inbound-raise-localpref
   - ip: "100.0.0.11"
     remote_as: 10
     soft_reconfiguration: True
@@ -85,3 +85,11 @@ route_maps:
     match: "ip address prefix-list lan"
   - number: 200
     action: "permit"
+- name: inbound-raise-localpref
+  seqs:
+  - number: 100
+    action: "deny"
+    match: "ip address prefix-list lan"
+  - number: 200
+    action: "permit"
+    local_pref: 200
