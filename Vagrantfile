@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   config.vm.network "private_network", ip: "192.168.50.4",
     virtualbox__intnet: true
@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
     sudo apt-get update
     sudo apt-get install -y software-properties-common
     sudo apt-add-repository -y ppa:ansible/ansible
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu trusty stable"
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
     sudo apt-get update
     sudo apt-get install -y --force-yes python-netaddr python-pip ansible docker-ce
     echo "cd /vagrant" >> /home/vagrant/.bashrc
